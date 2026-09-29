@@ -1,11 +1,28 @@
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import {
+  Module,
+  NestModule,
+  MiddlewareConsumer,
+} from '@nestjs/common';
+
+import { AuthModule } from '../auth/auth.module.js';
+
 import { TicketsController } from './tickets.controller.js';
 import { TicketsService } from './tickets.service.js';
+
 import { RequestLoggerMiddleware } from '../common/request-logger.middleware.js';
 
 @Module({
-  controllers: [TicketsController],
-  providers: [TicketsService]
+  imports: [
+    AuthModule,
+  ],
+
+  controllers: [
+    TicketsController,
+  ],
+
+  providers: [
+    TicketsService,
+  ],
 })
 export class TicketsModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

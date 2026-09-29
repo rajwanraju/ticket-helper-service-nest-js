@@ -4,7 +4,7 @@ import { Ticket } from './ticket.interface.js';
 import { CreateTicketDto } from './dto/create-ticket.dto.interface.js';
 import { FilterTicketsQueryDto } from './dto/filter-tickets-query.dto.interface.js';
 import { UpdateTicketsDto } from './dto/update-tickets.dto.interface.js';
-import { StaffGuardGuard } from '../guard/staff.guard.guard.js';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
 
 @Controller('tickets')
 export class TicketsController {
@@ -39,7 +39,7 @@ export class TicketsController {
         return this.ticketsService.update(id, updateTicketDto);
     }
 
-    @UseGuards(StaffGuardGuard)
+    @UseGuards(JwtAuthGuard)
     @Patch(':id/close')
     closeTicket(@Param('id', ParseIntPipe) id: number) {
         return this.ticketsService.closeTicket(id);
